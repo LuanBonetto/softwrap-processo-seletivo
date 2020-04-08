@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { FaUserPlus } from 'react-icons/fa';
 import { insertNewPerson } from '../../actions/index';
 
 function ModalInsertPerson() {
@@ -41,7 +42,8 @@ function ModalInsertPerson() {
   return (
     <>
       <Container>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" style={{ margin: '10px 0' }} onClick={handleShow}>
+          <FaUserPlus style={{ margin: '0 5px' }} />
           Cadastar Nova Pessoa
         </Button>
       </Container>

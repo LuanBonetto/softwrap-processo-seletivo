@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { Table, Container, Button } from 'react-bootstrap';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
@@ -100,6 +99,8 @@ export default function ContentTable() {
         closeModal={handleClose}
         onUpdatePerson={updatePerson}
       />
+
+
     </Container>
   );
 }
