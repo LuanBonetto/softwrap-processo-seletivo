@@ -21,5 +21,5 @@
 - dotenv
 
 ### Deploy
-- Front-End -> softwrap-teste-luan.surge.sh
+- Front-End -> https://softwrap-teste-luan.surge.sh/
 - Back-End -> https://us-central1-softwrap-tabela.cloudfunctions.net/app
