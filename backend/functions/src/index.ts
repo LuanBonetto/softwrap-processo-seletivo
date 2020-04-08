@@ -1,5 +1,5 @@
 import { AddressInfo } from "net";
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import admin from "firebase-admin";
 import firebase from "firebase";
@@ -28,16 +28,6 @@ const firebaseConfig = {
 
 admin.initializeApp(functions.config().firebase);
 firebase.initializeApp(firebaseConfig);
-
-
-app.get('/', (req: Request, res: Response) => {
-  const info = {
-    endpoints: {
-      '/': 'retorna lista com todos os endpoints',
-    }
-  };
-  res.send(info)
-});
 
 app.post('/person', insertNewPersonEndpoint)
 app.get('/persons', getPersonsEndpoint)

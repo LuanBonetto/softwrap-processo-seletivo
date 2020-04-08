@@ -16,7 +16,7 @@ export const insertNewPersonEndpoint = async(req:Request, res:Response) => {
 
         res.status(200).send(result)
     }catch(err){
-        res.status(err.errorCode || 400).send({
+        res.status(err.statusCode || 400).send({
             message: err.message
         })
     }
