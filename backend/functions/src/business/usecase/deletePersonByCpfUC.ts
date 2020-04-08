@@ -1,18 +1,22 @@
 import { PersonDB } from "../../data/personDB";
 
 export class DeletePersonByCpfUC {
-    constructor(private db:PersonDB){}
+    constructor(private db: PersonDB) { }
 
-    public async execute(input:DeletePersonByCpfInput): Promise<DeletePersonByCpfOutput>{
+    public async execute(input: DeletePersonByCpfInput): Promise<DeletePersonByCpfOutput> {
 
-        try{
+        try {
+
             await this.db.deletePersonByCpf(input.cpf)
 
             return ({
-                message: "Success"
+                message: "Deletado com Sucesso"
             })
-        }catch(err){
-            throw new Error(err)
+        } catch (err) {
+            throw {
+                code: err.statusCode || 400,
+                message: err.message || 'Algum erro ocorreu durante a requisição'
+            }
         }
 
     }

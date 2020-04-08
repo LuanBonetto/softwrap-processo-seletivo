@@ -4,6 +4,7 @@ import { PersonDB } from '../../data/personDB';
 
 export const deletePersonByCpfEndpoint = async(req: Request, res: Response) => {
     try{
+
         const deletePersonByCpfUC = new DeletePersonByCpfUC(new PersonDB())
         const response = await deletePersonByCpfUC.execute({
             cpf: req.params.cpf

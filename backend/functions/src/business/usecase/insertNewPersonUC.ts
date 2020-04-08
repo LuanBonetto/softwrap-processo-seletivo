@@ -1,45 +1,66 @@
 import { PersonDB } from "../../data/personDB";
 import { Person } from "../entities/person";
+import { BadRequestError } from "../errors/badRequestError";
+import { CpfCeck } from "../../utils/cpfCheck";
 
 export class InsertNewPersonUC {
-    constructor(private db:PersonDB){}
+    constructor(private db: PersonDB) { }
 
-    public async execute(input:InsertNewPersonInput): Promise<InsertNewPersonOutput>{
-        try{
-        const newPerson = new Person(
-            input.name,
-            input.age,
-            input.civilStatus,
-            input.cpf,
-            input.city,
-            input.state
-        )
+    public async execute(input: InsertNewPersonInput): Promise<InsertNewPersonOutput> {
 
-        const response = await this.db.insertNewPerson(newPerson)
+        try {
 
-        if (response === false){
-            throw new Error("Insert Denied")
+            if (
+                !input.name ||
+                !input.age ||
+                !input.civilStatus ||
+                !input.cpf ||
+                !input.city ||
+                !input.state
+            ) {
+                throw new BadRequestError('Está faltando preencher algum campo!')
+            }
+
+            const isValidCpf = new CpfCeck()
+            if(isValidCpf.validateCpf(input.cpf) === false){
+                throw new BadRequestError('O CPF é Inválido')
+            }
+
+            const newPerson = new Person(
+                input.name,
+                input.age,
+                input.civilStatus,
+                input.cpf,
+                input.city,
+                input.state
+            )
+
+            const response = await this.db.insertNewPerson(newPerson)
+
+            if (response === false) {
+                throw new BadRequestError("Esse CPF já está cadastrado no sistema")
+            }
+
+            return ({
+                message: "Inserção concluída"
+            })
+
+        } catch (err) {
+            throw {
+                code: err.statusCode || 400,
+                message: err.message || 'Algum erro ocorreu durante a requisição'
+            }
         }
-        
-        return ({
-            message: "Insert Success"
-        })
-        
-    }catch(err){
-        return ({ 
-            message: err.message
-        })
-    }
     }
 }
 
 interface InsertNewPersonInput {
-    name:string,
+    name: string,
     age: number,
-    civilStatus:string,
-    cpf:string,
-    city:string,
-    state:string
+    civilStatus: string,
+    cpf: string,
+    city: string,
+    state: string
 }
 
 interface InsertNewPersonOutput {
